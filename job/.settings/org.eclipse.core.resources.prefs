@@ -1,0 +1,11 @@
+#Fri Jul 22 19:47:35 CST 2016
+eclipse.preferences.version=1
+encoding//src/org/job/dao/DaoTemplate.java=UTF-8
+encoding//src/org/job/pager/Compare.java=UTF-8
+encoding//src/org/job/pager/Condition.java=UTF-8
+encoding//src/org/job/pager/Function.java=UTF-8
+encoding//src/org/job/pager/LinkCondition.java=UTF-8
+encoding//src/org/job/pager/OrderDirect.java=UTF-8
+encoding//src/org/job/web/action/AuthenticationInterceptor.java=UTF-8
+encoding//src/org/job/web/action/UserAction.java=UTF-8
+encoding//src/org/job/web/action/WorkAction.java=UTF-8

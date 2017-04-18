@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	
+	<package name="index" namespace="/" extends="struts-default">
+		<action name="*" class="defaultAction" method="{1}">
+			<result name="toIndex">/index.jsp</result>
+			<result name="toLogin">/login.jsp</result>
+			<result name="toRegister">/register.jsp</result>
+			<result name="toCompanyList">/companylist.jsp</result>
+			<result name="toRelease">/release.jsp</result>
+		</action>
+	</package>
+	
+	<package name="Interceptor" namespace="/" extends="json-default">
+	<!-- 配置拦截器和拦截器栈 -->
+		<interceptors>
+			<interceptor name="authenticationInterceptor" class="org.job.web.action.AuthenticationInterceptor"></interceptor>
+			<!-- 配置本项目的拦截器栈(注意:拦截器栈一定要包含struts2的缺省拦截器栈) -->
+			<interceptor-stack name="mvcch7DefaultInterceptStack">
+				<!-- 被包含的struts2的缺省拦截器栈 -->
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="authenticationInterceptor"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<!-- 指定本项目的缺省拦截器 -->
+		<default-interceptor-ref name="mvcch7DefaultInterceptStack" />
+	</package>
+	
+	<package name="user" namespace="/user" extends="Interceptor">
+		<action name="*" class="userAction" method="{1}">
+			<result name="input" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">index</param>
+			</result>
+			<result name="register_success">/login.jsp</result>
+			<result name="register_input">/register.jsp</result>
+			<result name="login_success" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">index</param>
+			</result>
+			<result name="login_input" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">login</param>
+			</result>
+			<result name="toUpdate">/accountSetting.jsp</result>
+			<result name="logout_success" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">index</param>
+			</result>
+			<result name="toMyResume">/jianli.jsp</result>
+			<result name="update_success" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">login</param>
+				<param name="message">${message}</param>
+				<param name="encode">true</param>
+			</result>
+			<result name="update_input" type="redirectAction">
+				<param name="actionName">toUpdate</param>
+				<param name="message">${message}</param>
+				<param name="encode">true</param>
+			</result>
+			<result name="update_info" type="redirectAction">myresume</result>
+		</action>
+	</package>
+	
+	<package name="work" namespace="/work" extends="Interceptor">
+		<action name="*" class="workAction" method="{1}">
+			<result name="input" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">index</param>
+			</result>
+			<result name="add_success" type="redirectAction">list</result>
+			<result name="toEditDetail">/release.jsp</result>
+			<result name="work_positions">/positions.jsp</result>
+			<result name="work_job_list">/jobList.jsp</result>
+			<result name="toInfoDetail">/jobDetail.jsp</result>
+			<result name="update_success" type="redirectAction">list</result>
+			<result name="update_input" type="redirectAction">
+				<param name="actionName">detail</param>
+				<param name="workId">${workId}</param>
+			</result>
+			<result name="remove_success" type="redirectAction">list</result>
+			<result name="remove_input" type="redirectAction">
+				<param name="actionName">detail</param>
+				<param name="workId">${workId}</param>
+			</result>
+			<result name="to_canInterviewResumes">/canInterviewResumes.jsp</result>
+			<result name="to_recommendResumes">/recommendResumes.jsp</result>
+			<result name="to_inappropriateResumes">/inappropriateResumes.jsp</result>
+			<result name="to_notifiedResumes">/notifiedResumes.jsp</result>
+			<result name="to_applyResumes">/applyResumes.jsp</result>
+			<result name="notice_success" type="redirectAction">notifiedResumes</result>
+			<result name="refuse_success" type="redirectAction">inappropriateResumes</result>
+			<result name="delivery_success" type="redirectAction">list</result>
+		</action>
+	</package>
+	
+	<package name="resume" namespace="/resume" extends="Interceptor">
+		<action name="*" class="resumeAction" method="{1}">
+			<result name="input" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">index</param>
+			</result>
+			<result name="save_success" type="redirectAction">
+				<param name="namespace">/user</param>
+				<param name="actionName">myresume</param>
+			</result>
+			<result name="resume_preview">/preview.jsp</result>
+		</action>
+	</package>
+	
+	<package name="admin" namespace="/admin" extends="Interceptor">
+		<action name="*" class="adminAction" method="{1}">
+			<result name="success">/admin/login.jsp</result>
+			<result name="input">/admin/login.jsp</result>
+			<result name="login_success" type="redirectAction">index</result>
+			<result name="toIndex">/admin/index.jsp</result>
+			<result name="toUser">/admin/user.jsp</result>
+			<result name="toWork">/admin/work.jsp</result>
+			<result name="toNews">/admin/news.jsp</result>
+			<result name="add_success"  type="redirectAction">
+				<param name="actionName">index</param>
+				<param name="type">3</param>
+			</result>
+		</action>
+	</package>
+	
+</struts>    
